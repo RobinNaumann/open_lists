@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+@each $style, $size in $t-styles {
+	.text-#{$style}{
+		font-size: $size;
+	}
+}
+
+@each $name, $size in $t-headers {
+
+	.header-#{$name}{
+		@extend .b;
+		line-height: 1;
+		font-size: $size;
+	}
+
+	h#{$name}{
+		@extend .header-#{$name};
+	}
+}

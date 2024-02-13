@@ -1,0 +1,29 @@
+import {
+  CheckCircle,
+  Circle,
+  Plus,
+  Trash,
+  Trash2,
+  Trash2Icon,
+  X,
+} from "lucide-react";
+import { imsg } from "../util";
+
+export function FooterView() {
+  return (
+    <div class="footer">
+      {imsg({ en: "written by", de: "geschrieben von" })}&nbsp;
+      <a href="https://robbb.in">Robin</a>.<br />
+      v0.3 <a href="https://gitlab.com/constorux/open_lists.git">source code</a>
+      &nbsp;<a href="https://robbb.in/impressum.html">impressum</a>
+      <div class="i" style="margin-top: 10px">
+        developed in{" "}
+        <img
+          style="height: 1rem; vertical-align: middle; margin-right: 0.5rem"
+          src="https://raw.githubusercontent.com/nicolindemann/hamburg-icon/master/hamburg-icon.png"
+        />
+        Hamburg, Germany
+      </div>
+    </div>
+  );
+}

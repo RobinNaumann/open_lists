@@ -1,0 +1,94 @@
+
+
+
+.btn-icon {
+	padding: 0px;
+	aspect-ratio: 1;
+}
+
+.footer {
+	text-align: center;
+	margin: 2rem 0;
+	margin-top: 6rem;
+	font-size: 0.75rem;
+	opacity: 0.6;
+}
+
+
+a {
+	color: teal;
+}
+
+a:visited {
+	color: darkslategray;
+}
+
+
+.empty-list-message{
+	text-align: center;
+	margin: 2rem 0;
+	opacity: 0.6;
+
+}
+
+.rotate-box{
+	@extend .rotate;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.rotate {
+	animation: rotation 1.5s infinite linear;
+}
+
+@keyframes rotation {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(359deg);
+	}
+}
+
+.header-title{
+	cursor: pointer;
+	img{
+		height: 1.5rem;
+		margin-top: 0.7rem;
+	}
+	
+}
+
+.red{
+	color: red;
+	font-size: larger;
+}
+
+.googlebtn{
+	&:hover{
+		background-color: #fafafa !important;
+		color: black !important;
+		border-color: #00000033 !important;
+
+	}
+	&:active{
+		background-color: #DDDDDD !important;
+		color: black !important;
+		border-color: #00000033 !important;
+	}
+}
+
+.profile-img{
+	height: 100px;
+	width: 100px;
+
+	& ~ div{
+		visibility:hidden;
+	}
+
+	&:hover ~ div{
+		visibility: visible;
+	}
+}

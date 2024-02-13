@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 237 237" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1.07972,0,0,1.10345,-9.41541,-13.6988)">
+        <path d="M11.934,197.581C9.86,192.421 8.72,186.804 8.72,180.927L8.72,57.975C8.72,32.829 29.584,12.414 55.283,12.414L180.938,12.414C206.636,12.414 227.5,32.829 227.5,57.975L227.5,180.927C227.5,186.804 226.361,192.421 224.287,197.581C224.182,197.579 224.078,197.578 223.973,197.578L12.248,197.578C12.143,197.578 12.038,197.579 11.934,197.581Z" style="fill:rgb(244,255,254);"/>
+    </g>
+    <g transform="matrix(3.5954,0,0,3.5954,-58.6915,-188.153)">
+        <g transform="matrix(50,0,0,50,80.1995,105.127)">
+        </g>
+        <text x="17.399px" y="105.127px" style="font-family:'AmericanTypewriter-Bold', 'American Typewriter', serif;font-weight:700;font-size:50px;fill:rgb(37,37,37);">oL</text>
+    </g>
+    <path d="M232.751,204.323C225.407,222.992 207.209,236.22 185.946,236.22L50.274,236.22C29.011,236.22 10.814,222.992 3.47,204.323C3.583,204.321 3.696,204.32 3.809,204.32L232.412,204.32C232.525,204.32 232.638,204.321 232.751,204.323Z" style="fill:rgb(37,37,37);"/>
+</svg>
