@@ -15,7 +15,7 @@ about: >
 icon: https://gitlab.com/constorux/open_lists/-/raw/main/public/favicon.svg
 source: https://gitlab.com/constorux/open_lists/
 donate: https://www.buymeacoffee.com/robinnaumann
-screenshots:
+# screenshots:
 releases: 
   - version: 0.3
     notes: improved layout
