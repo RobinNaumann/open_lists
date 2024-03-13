@@ -1,0 +1,27 @@
+# dego is a simple knowledge management tool. It allows me to publish
+# information about projects, tools in a decentralized way.
+# for a usecase, check out apps.robbb.in
+
+name: openLists
+authors: 
+  - ref: https://gist.githubusercontent.com/RobinNaumann/7d9d5b8902a697cda1f0ba2c5b7234c6/raw/46ebed8489de7e4458335ae434fee986d594504b/robin.degu.yaml
+    role: developer
+tagline: web based collaborative list keeping
+about: >
+  openLists is a web based collaborative list keeping tool. 
+  It allows you to create lists and share them with others. 
+  It is open source and free to use. You can use it on my 
+  website or host it yourself using Docker.
+icon: https://gitlab.com/constorux/open_lists/-/raw/main/public/favicon.svg
+source: https://gitlab.com/constorux/open_lists/
+donate: https://www.buymeacoffee.com/robinnaumann
+screenshots:
+releases: 
+  - version: 0.3
+    notes: improved layout
+    date: 2023-12-01
+    downloads:
+      - platform: web
+        url: https://liste.robbb.in
+      - platform: docker
+        url: registry.gitlab.com/constorux/open_lists
