@@ -24,4 +24,4 @@ releases:
       - platform: web
         url: https://liste.robbb.in
       - platform: docker
-        url: registry.gitlab.com/constorux/open_lists
+        url: https://registry.gitlab.com/constorux/open_lists
