@@ -1,6 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 
-type BitStreamWorker<T> = (emit: (value: T) => void) => Promise<void>
+type BitStreamWorker<T> = (data: (value: T) => void, error: (e: string) => void) => Promise<void>
 
 export class Bit<T>{
     private worker?: () => Promise<T>;
@@ -28,7 +28,8 @@ export class Bit<T>{
         this.emit({loading: true});
     }
 
-    public emitError(e: string) {
+    public emitError(e?: string) {
+        console.log("bit error",e ?? "unknown error");
         this.emit({error: e});
     }
 
@@ -43,7 +44,7 @@ export class Bit<T>{
     public async listen(stream: BitStreamWorker<T>) {
         console.log("listening to stream");
         try {
-            await stream((d) => this.emitData(d));
+            await stream((d) => this.emitData(d),(e) => this.emitError(e));
         }
         catch (e) {
             this.emitError(e);
@@ -64,7 +65,12 @@ export class Bit<T>{
         const s = this.s[0];
         if (s.loading) return onLoading();
         if (s.error) return onError(s.error);
-        return onData(s.data);
+        try{
+            return onData(s.data);
+        }
+        catch(e){
+            return onError(e);
+        }
     }
 }
 

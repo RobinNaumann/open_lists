@@ -28,11 +28,18 @@ export class EntryService {
         await collEntries.delete(id);
     }
 
-    async observe(emit: (entries: any[]) => void): Promise<void> {
+    async observe(listId: string, data: (entries: any[]) => void, error: (e: string) => void): Promise<void> {
         const load = async () => {
-            emit((await collEntries.getFullList()));
+            try {
+                const d = (await collEntries.getList(1,100,{ filter: "list = '" + listId + "'"})).items;
+                //console.log("entries",d);
+
+                data(d);
+            } catch (e) {
+                error(e);
+            }
         }
-        await collEntries.subscribe("*", (_) => { load() });
         load();
+        const sub = await collEntries.subscribe("*", (_) => { load() }, error);
     }
 }

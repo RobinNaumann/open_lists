@@ -1,6 +1,6 @@
 :root {
 	--geoRadius: 7px;
-	
+
 
 	/*font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;*/
 	font-family: 'Courier New', Courier, monospace;
@@ -32,6 +32,7 @@ body,
 	margin: 0;
 	display: block;
 	min-height: 100vh;
+	background-color: white;
 }
 
 .elbe-textfield {
@@ -41,6 +42,7 @@ body,
 	border: #00000022 2px solid;
 	padding: 0 0.75rem;
 	height: 3rem;
+	min-width: 50px;
 }
 
 .elbe-textfield:focus {
@@ -62,22 +64,28 @@ button {
 	cursor: pointer;
 }
 
-.btn-primary{
+button[disabled=""] {
+	@extend .disabled;
+	opacity: 0.2 !important;
+	cursor: not-allowed;
+}
+
+.btn-primary {
 	background-color: #000000;
 	color: white;
 }
 
-.btn-integrated{
+.btn-integrated {
 	background-color: transparent;
 	color: black;
 }
 
-.disabled{
-	filter: grayscale();
+.disabled {
+	filter: grayscale(black);
 	opacity: 0.3;
 }
 
-.btn-icon{
+.btn-icon {
 	padding: 0px;
 	aspect-ratio: 1;
 }
@@ -94,7 +102,7 @@ button {
 	flex-direction: column;
 	align-items: stretch;
 	margin: 10px;
-	width: calc(min(100%, 500px) - 20px);
+	width: calc(min(100%, 400px) - 20px);
 
 }
 
@@ -119,13 +127,14 @@ button {
 	align-items: center;
 	margin: 4px 0px;
 	padding: 10px;
+	cursor: pointer;
 
 	border: #00000012 2px solid;
 	border-radius: var(--geoRadius);
 	min-height: 3rem;
 }
 
-.create-base{
+.create-base {
 	margin: 1rem 0;
 	display: flex;
 }
@@ -136,13 +145,13 @@ button {
 	margin-right: 1rem;
 }
 
-.header{
+.header {
 	width: 100%;
 	position: fixed;
 	left: 0;
 	top: 0;
 	display: flex;
-	
+
 	align-items: center;
 	justify-content: space-between;
 	min-height: 3rem;
@@ -154,4 +163,50 @@ button {
 
 }
 
+.footer {
+	text-align: center;
+	margin: 2rem 0;
+	font-size: 0.75rem;
+	opacity: 0.6;
+}
 
+
+a {
+	color: teal;
+}
+
+a:visited {
+	color: darkslategray;
+}
+
+.padded{
+	padding: 1rem;
+}
+
+.empty-list-message{
+	text-align: center;
+	margin: 2rem 0;
+	opacity: 0.6;
+
+}
+
+.rotate-box{
+	@extend .rotate;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.rotate {
+	animation: rotation 1.5s infinite linear;
+}
+
+@keyframes rotation {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(359deg);
+	}
+}
