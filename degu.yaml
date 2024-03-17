@@ -12,7 +12,7 @@ about: >
   It allows you to create lists and share them with others. 
   It is open source and free to use. You can use it on my 
   website or host it yourself using Docker.
-icon: https://gitlab.com/constorux/open_lists/-/raw/main/public/favicon.svg
+icon: https://gitlab.com/constorux/open_lists/-/raw/main/public/icon.svg
 source: https://gitlab.com/constorux/open_lists/
 donate: https://www.buymeacoffee.com/robinnaumann
 # screenshots:
