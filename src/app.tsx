@@ -43,7 +43,10 @@ const _themeContext = makeThemeContext({
 export const { useTheme, WithTheme } = _themeContext;
 
 function App() {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(
+    window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches,
+  );
   const [highVis, setHighVis] = useState(false);
 
   return (

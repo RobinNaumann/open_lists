@@ -17,7 +17,7 @@ RUN cp -rT /make/node_modules /app/node_modules
 COPY ./ ./
 
 # ============ BUILD THE APPLICATION ============
-ARG _APP_VERSION="0.1.3"
+ARG _APP_VERSION="0.1.4"
 # update the version label
 RUN sed -i "s/const \$APP_VERSION = .*;/const \$APP_VERSION = \"${_APP_VERSION}\";/g" src/shared/info.shared.ts
 

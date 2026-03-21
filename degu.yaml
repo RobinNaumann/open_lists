@@ -18,7 +18,7 @@ screenshots:
   - https://raw.githubusercontent.com/RobinNaumann/open_lists/main/public/screenshots/scs2.png
   - https://raw.githubusercontent.com/RobinNaumann/open_lists/main/public/screenshots/scs3.png
 releases:
-  - version: 0.2.4
+  - version: 0.1.4
     downloads:
       - platform: docker
-        url: https://github.com/RobinNaumann/open_lists
+        url: https://github.com/RobinNaumann/open_lists/pkgs/container/open_lists
