@@ -1,4 +1,4 @@
-# openLists _<img src="./public/donauwelle.png" width="40" align="right"/>_
+# openLists _<img src="./public/icon.svg" width="40" align="right"/>_
 
 openLists is a self-hosted, open-source list management application built with React. It allows users to create and manage collaborative lists of items, such as tasks or shopping lists.
 
