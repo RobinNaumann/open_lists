@@ -1,8 +1,36 @@
-# Step 1: Specify the base image
-FROM  --platform=linux/amd64 nginx:alpine
+FROM oven/bun:debian
 
-# Step 2: Copy application code into Docker image
-COPY ./dist /usr/share/nginx/html
+# install the ping command. this is used to check if services are up
+RUN apt update && apt install -y iputils-ping
 
-# Step 3: Copy the Nginx configuration file
-COPY nginx_config.conf /etc/nginx/conf.d/default.conf
+# install ffmpeg for video processing
+#RUN apt install -y ffmpeg
+
+RUN mkdir /make
+WORKDIR /make
+
+# RUN rm -f bun.lockb
+COPY package.json bun.lockb ./
+RUN mkdir /app
+RUN bun install --frozen-lockfile
+RUN cp -rT /make/node_modules /app/node_modules
+COPY ./ ./
+
+# ============ BUILD THE APPLICATION ============
+ARG _APP_VERSION="0.1.3"
+# update the version label
+RUN sed -i "s/const \$APP_VERSION = .*;/const \$APP_VERSION = \"${_APP_VERSION}\";/g" src/shared/info.shared.ts
+
+
+# build the application
+RUN bun run --env-file .env.production build
+RUN cp -rT /make/dist /app
+RUN rm -rf /make
+
+# set up runtime environment
+EXPOSE 80
+VOLUME /app/data
+LABEL version="${_APP_VERSION}"
+
+WORKDIR /app
+ENTRYPOINT ["bun", "./server/app.server.js"]

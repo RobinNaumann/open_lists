@@ -1,10 +1,16 @@
-import { CheckCircle, Circle, Plus, Trash, Trash2, Trash2Icon, X } from "lucide-react";
-import { imsg } from "../util";
+import { Footer } from "elbe-ui";
+import { appConfig } from "../shared/info.shared";
 
-export function FooterView() {
-    return (
-        <div class="footer">
-            {imsg({"en": "written by", "de": "geschrieben von"})} <a href="https://robbb.in">Robin</a>.<br/>v0.3 <a href="https://gitlab.com/constorux/open_lists.git">source code</a>
-        </div>
-    );
+export function AppFooter() {
+  return (
+    <Footer
+      marginTop={3}
+      copyright={appConfig.name}
+      version={appConfig.version}
+      legal={{
+        label: "by robin - source",
+        href: appConfig.repository,
+      }}
+    />
+  );
 }

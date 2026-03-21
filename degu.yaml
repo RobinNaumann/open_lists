@@ -1,0 +1,24 @@
+# dego is a simple knowledge management tool. It allows me to publish
+# information about projects, tools in a decentralized way.
+# for a usecase, check out apps.robbb.in
+
+name: openLists
+authors:
+  - ref: https://gist.githubusercontent.com/RobinNaumann/7d9d5b8902a697cda1f0ba2c5b7234c6/raw/46ebed8489de7e4458335ae434fee986d594504b/robin.degu.yaml
+    role: developer
+tagline: collaborative list management tool
+about: >
+  openLists is a self-hosted, open-source list management application built with React. It allows users to create and manage collaborative lists of items, such as tasks or shopping lists.
+  You can share lists with others by sharing the URL. No accounts or signups required.
+icon: https://raw.githubusercontent.com/RobinNaumann/open_lists/main/public/icon.svg
+source: https://github.com/RobinNaumann/open_lists
+donate: https://robbb.in/donate
+screenshots:
+  - https://raw.githubusercontent.com/RobinNaumann/open_lists/main/public/screenshots/scs1.png
+  - https://raw.githubusercontent.com/RobinNaumann/open_lists/main/public/screenshots/scs2.png
+  - https://raw.githubusercontent.com/RobinNaumann/open_lists/main/public/screenshots/scs3.png
+releases:
+  - version: 0.2.4
+    downloads:
+      - platform: docker
+        url: https://github.com/RobinNaumann/open_lists
