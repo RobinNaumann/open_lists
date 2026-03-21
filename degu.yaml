@@ -20,5 +20,7 @@ screenshots:
 releases:
   - version: 0.1.4
     downloads:
+      - platform: web
+        url: https://list.robbb.in
       - platform: docker
         url: https://github.com/RobinNaumann/open_lists/pkgs/container/open_lists
