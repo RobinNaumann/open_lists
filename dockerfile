@@ -9,8 +9,8 @@ RUN apt update && apt install -y iputils-ping
 RUN mkdir /make
 WORKDIR /make
 
-# RUN rm -f bun.lockb
-COPY package.json bun.lockb ./
+# RUN rm -f bun.lock
+COPY package.json bun.lock ./
 RUN mkdir /app
 RUN bun install --frozen-lockfile
 RUN cp -rT /make/node_modules /app/node_modules
