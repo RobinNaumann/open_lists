@@ -20,7 +20,7 @@
             }
 
             .back {
-                fill: black;
+                fill: #622f91;
                 filter: brightness(60%) contrast(90%) saturate(50%)
             }
 

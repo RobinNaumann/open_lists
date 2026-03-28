@@ -1,21 +1,29 @@
-import {
-  Button,
-  Card,
-  Column,
-  Icons,
-  Page,
-  Row,
-  Text,
-  useToast,
-} from "elbe-ui";
+import { Button, Card, Column, Icons, Page, Row, Text } from "elbe-ui";
 import { useApp } from "elbe-ui/dist/ui/app/app_ctxt";
+import { useEffect } from "react";
 import { createRandomListId } from "../app";
 import { useL10n } from "./l10n";
+
+const MANIFEST_PATH = "/api/manifest.webmanifest";
+
+export function setManifestHref(listId: string | null) {
+  let link = document.head.querySelector<HTMLLinkElement>(
+    'link[rel="manifest"]',
+  );
+  if (!link) {
+    link = document.createElement("link");
+    link.rel = "manifest";
+    document.head.appendChild(link);
+  }
+  link.href = listId ? `${MANIFEST_PATH}?listId=${listId}` : MANIFEST_PATH;
+}
 
 export function HomePage() {
   const { c } = useL10n();
   const app = useApp();
-  const { showToast } = useToast();
+
+  useEffect(() => setManifestHref(null), []);
+
   return (
     <Page
       title="openLists"

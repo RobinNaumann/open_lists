@@ -14,6 +14,10 @@ export const { useL10n, L10n } = makeL10n(
       listEntryDoneToggle: "Toggle entry done",
       listShareText: "Edit this list with me:",
       listShareToClipboardSuccess: "List URL copied to clipboard",
+      listIdTooShort:
+        "List ID is too short.\nIt must be at least 4 characters long.",
+      listNewHint: (listId: string) => `your list "${listId}" is empty`,
+      listNewHintAdd: "share it with friends or add an entry",
     },
   },
   {
@@ -29,6 +33,10 @@ export const { useL10n, L10n } = makeL10n(
       listEntryDoneToggle: "Eintrag als erledigt markieren",
       listShareText: "Bearbeite diese Liste mit mir:",
       listShareToClipboardSuccess: "Listen-URL in die Zwischenablage kopiert",
+      listIdTooShort:
+        "Die Listen-ID ist zu kurz.\nSie muss mindestens 4 Zeichen lang sein.",
+      listNewHint: (listId) => `deine Liste "${listId}" ist leer`,
+      listNewHintAdd: "teile sie mit Freunden oder füge einen Eintrag hinzu",
     },
   },
 );

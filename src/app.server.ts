@@ -3,10 +3,11 @@
 // YOU CAN MODIFY IT, BUT MAKE SURE NOT TO REMOVE IT
 //
 
-import { donauServerRun, serveFrontend } from "donau/server";
+import { donauServerRun, parameter, route, serveFrontend } from "donau/server";
 import { handleServerCalls } from "donau/servercalls/server";
 import { ServerChannelServer } from "donau/serverchannels/server";
 import { listService } from "./server/s_list.server";
+import { manifestService } from "./server/s_manifest.server";
 import {
   serverCallDefinitions,
   serverChannelDefinitions,
@@ -58,7 +59,24 @@ const donauServer = donauServerRun(
       version: "1.0.3",
       description: "the API of the openLists app",
     },
-    routes: [...serverCallRoutes, ...channelServer.infoRoutes()],
+    routes: [
+      ...serverCallRoutes,
+      ...channelServer.infoRoutes(),
+      route("/manifest.webmanifest", {
+        method: "get",
+        parameters: {
+          list_id: parameter.query({ optional: true, type: "string" }),
+        },
+        description:
+          "returns a web manifest for the app, customized for the list if listId query param is provided",
+        handler: async (req, res) => {
+          const listId = req.params.list_id ?? null;
+          res.header("Cache-Control", "no-store");
+          res.header("Content-Type", "application/manifest+json");
+          res.send(JSON.stringify(manifestService.manifest(listId)));
+        },
+      }),
+    ],
   },
   [process.env.SERVE_FRONTEND === "true" ? serveFrontend("client") : null],
 );

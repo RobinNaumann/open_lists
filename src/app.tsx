@@ -4,6 +4,7 @@ import { useServerChannels } from "donau/serverchannels/client";
 import {
   Button,
   ElbeApp,
+  HexColor,
   Icons,
   makeThemeContext,
   renderElbe,
@@ -14,6 +15,7 @@ import {
   serverCallDefinitions,
   serverChannelDefinitions,
 } from "./shared/calls.shared";
+import { appConfig } from "./shared/info.shared";
 import { L10n } from "./view/l10n";
 import { AppFooter } from "./view/v_footer";
 import { HomePage } from "./view/vp_home";
@@ -30,7 +32,7 @@ export const { makeServerCall } = useServerCalls(serverCallDefinitions, {
 
 const _themeContext = makeThemeContext({
   seed: {
-    color: { accent: "#622f91" },
+    color: { accent: appConfig.theme.accent as HexColor },
     type: {
       heading: {
         bold: true,

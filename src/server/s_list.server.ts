@@ -8,11 +8,23 @@ import { NotifyableService } from "./s_notifyable.server";
 
 const storagePath = "./data/";
 
+function _sanitizeListId(id: string | null | undefined): string | null {
+  if (!id) return null;
+  const trimmed = id.trim();
+  if (trimmed.length < 4) return null;
+  if (trimmed.length > 64) return null;
+  if (!/^[A-Za-z0-9_-]+(?:-[A-Za-z0-9_-]+)*$/.test(trimmed)) return null;
+  return trimmed;
+}
+
 class ListService extends NotifyableService<ListModel> {
   private async _setList(
-    listId: string,
+    unsanitizedListId: string,
     updater?: (existing: ListModel) => ListModel,
   ): Promise<ListModel> {
+    const listId = _sanitizeListId(unsanitizedListId);
+    if (!listId) throw new Error("invalid list id");
+
     const existing = await this.getList(listId);
     const updated = sanitizedList(updater ? updater(existing) : existing);
     if (!isValidList(updated)) throw new Error("invalid list data");
@@ -21,7 +33,10 @@ class ListService extends NotifyableService<ListModel> {
     return updated;
   }
 
-  async getList(listId: string): Promise<ListModel> {
+  async getList(unsanitizedListId: string): Promise<ListModel> {
+    const listId = _sanitizeListId(unsanitizedListId);
+    if (!listId) throw new Error("invalid list id");
+
     try {
       const data = await Bun.file(storagePath + listId + ".json").json();
       if (!isValidList(data)) throw new Error("invalid list data in file");

@@ -3,6 +3,7 @@ import {
   Card,
   Column,
   Field,
+  Icon,
   IconButton,
   Icons,
   Page,
@@ -12,16 +13,23 @@ import {
   useToast,
 } from "elbe-ui";
 import { useApp } from "elbe-ui/dist/ui/app/app_ctxt";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createRandomListId, makeServerCall } from "../app";
 import { appConfig } from "../shared/info.shared";
 import { ItemModel } from "../shared/m_list.shared";
 import { ListBit } from "./b_list";
 import { useL10n } from "./l10n";
+import { setManifestHref } from "./vp_home";
 
 export function ListPage(p: { listId: string }) {
   const app = useApp();
   const { c } = useL10n();
+
+  useEffect(() => {
+    setManifestHref(p.listId);
+    return () => setManifestHref(null);
+  }, [p.listId]);
+
   return (
     <Page
       title={
@@ -58,10 +66,25 @@ export function ListPage(p: { listId: string }) {
       centerTitle
       narrow
     >
-      <ListBit.Provider listId={p.listId} key={p.listId}>
-        <_ListView listId={p.listId} />
-      </ListBit.Provider>
+      {p.listId.length < 4 ? (
+        <_InvalidListId />
+      ) : (
+        <ListBit.Provider listId={p.listId} key={p.listId}>
+          <_ListView listId={p.listId} />
+        </ListBit.Provider>
+      )}
     </Page>
+  );
+}
+
+function _InvalidListId({}) {
+  const { c } = useL10n();
+
+  return (
+    <Column cross="center" main="center">
+      <Icon icon={Icons.TriangleAlert} />
+      <Text v={c.listIdTooShort} align="center" />
+    </Column>
   );
 }
 
@@ -76,6 +99,7 @@ function _ListView(p: { listId: string }) {
           width: "100%",
         }}
       >
+        {list.items.length === 0 && <_EmptyListHint listId={p.listId} />}
         {list.items.map((item, i) => (
           <_ListItem
             key={item.content + item.setAt}
@@ -213,5 +237,19 @@ function _NewEntry(p: { listId: string }) {
       onTrailingTap={content.length === 0 ? undefined : () => addEntry()}
       trailing={Icons.Plus}
     />
+  );
+}
+
+function _EmptyListHint(p: { listId: string }) {
+  const { c } = useL10n();
+
+  return (
+    <Card scheme="secondary">
+      <Column cross="center" main="center" gap={0.5}>
+        <Icon icon={Icons.ListChecks} style={{ margin: "1rem" }} />
+        <Text.h5 v={c.listNewHint(p.listId)} align="center" />
+        <Text v={c.listNewHintAdd} align="center" />
+      </Column>
+    </Card>
   );
 }

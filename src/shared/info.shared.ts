@@ -14,4 +14,7 @@ export const appConfig = {
     maxStringLength: 1000,
     maxListItems: 500,
   },
+  theme: {
+    accent: "#622f91",
+  },
 };
