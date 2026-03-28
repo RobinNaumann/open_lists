@@ -15,7 +15,7 @@ export function setManifestHref(listId: string | null) {
     link.rel = "manifest";
     document.head.appendChild(link);
   }
-  link.href = listId ? `${MANIFEST_PATH}?listId=${listId}` : MANIFEST_PATH;
+  link.href = listId ? `${MANIFEST_PATH}?list_id=${listId}` : MANIFEST_PATH;
 }
 
 export function HomePage() {

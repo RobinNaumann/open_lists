@@ -21,10 +21,10 @@ export class ManifestService {
       theme_color: appConfig.theme.accent,
       icons: [
         {
-          src: "/icon.svg",
-          sizes: "any",
-          type: "image/svg+xml",
-          purpose: "any",
+          src: "/icon.png",
+          //sizes: "any",
+          //type: "image/svg+xml",
+          //purpose: "any",
         },
       ],
     };

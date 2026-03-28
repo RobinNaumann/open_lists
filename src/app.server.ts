@@ -70,7 +70,10 @@ const donauServer = donauServerRun(
         description:
           "returns a web manifest for the app, customized for the list if listId query param is provided",
         handler: async (req, res) => {
-          const listId = req.params.list_id ?? null;
+          let receivedId: any = req.query.list_id;
+          if (Array.isArray(receivedId)) receivedId = receivedId[0];
+          let listId = typeof receivedId === "string" ? receivedId : null;
+
           res.header("Cache-Control", "no-store");
           res.header("Content-Type", "application/manifest+json");
           res.send(JSON.stringify(manifestService.manifest(listId)));
