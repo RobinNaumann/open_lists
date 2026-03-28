@@ -7,13 +7,12 @@ export class ManifestService {
       ? `${listId} - ${appConfig.name}`
       : appBaseLongName;
     const startUrl = `/${listId ?? ""}`;
-    const manifestId = listId ? `/list/${listId}` : "/";
 
     return {
       name: appLongName,
       short_name: listId ?? appConfig.name,
       description: "An open-source app for collaborative list-making.",
-      id: manifestId,
+      id: startUrl,
       start_url: startUrl,
       scope: "/",
       display: "standalone",
@@ -25,6 +24,13 @@ export class ManifestService {
           //sizes: "any",
           //type: "image/svg+xml",
           //purpose: "any",
+        },
+      ],
+      shortcuts: [
+        {
+          name: "Create new list",
+          short_name: "New list",
+          url: "/",
         },
       ],
     };
