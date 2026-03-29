@@ -5,9 +5,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#622f91">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="openLists">
     <meta name="format-detection" content="telephone=no">
     <title>openLists</title>
     <meta property="og:title" content="openLists">
@@ -18,6 +15,27 @@
     <link rel="icon" type="image/svg+xml" href="/icon.svg">
     <link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
     <link rel="manifest" href="/api/manifest.webmanifest">
+
+    <script>
+        function _updateManifestLinkBeforeReactMounts() {
+
+            const rawPath = window.location.pathname || "/";
+            const normalizedPath = rawPath.replace(/^\/+|\/+$/g, "");
+            if (!normalizedPath || normalizedPath.includes("/")) return;
+
+            let listId = normalizedPath;
+            try {
+                listId = decodeURIComponent(normalizedPath);
+            } catch (_) { }
+
+            const manifest = document.head.querySelector('link[rel="manifest"]');
+            manifest?.setAttribute(
+                "href",
+                `/api/manifest.webmanifest?list_id=${encodeURIComponent(listId)}`,
+            );
+        }
+        _updateManifestLinkBeforeReactMounts();
+    </script>
     <style>
         @font-face {
             font-family: "Atkinson Hyperlegible";
