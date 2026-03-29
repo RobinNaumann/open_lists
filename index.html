@@ -16,26 +16,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
     <link rel="manifest" href="/api/manifest.webmanifest">
 
-    <script>
-        function _updateManifestLinkBeforeReactMounts() {
 
-            const rawPath = window.location.pathname || "/";
-            const normalizedPath = rawPath.replace(/^\/+|\/+$/g, "");
-            if (!normalizedPath || normalizedPath.includes("/")) return;
-
-            let listId = normalizedPath;
-            try {
-                listId = decodeURIComponent(normalizedPath);
-            } catch (_) { }
-
-            const manifest = document.head.querySelector('link[rel="manifest"]');
-            manifest?.setAttribute(
-                "href",
-                `/api/manifest.webmanifest?list_id=${encodeURIComponent(listId)}`,
-            );
-        }
-        _updateManifestLinkBeforeReactMounts();
-    </script>
     <style>
         @font-face {
             font-family: "Atkinson Hyperlegible";

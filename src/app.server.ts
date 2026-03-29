@@ -74,6 +74,19 @@ const donauServer = donauServerRun(
           if (Array.isArray(receivedId)) receivedId = receivedId[0];
           let listId = typeof receivedId === "string" ? receivedId : null;
 
+          if (!listId) {
+            const referer = req.get("referer") || "";
+            try {
+              if (referer) {
+                const u = new URL(referer);
+                const p = u.pathname.replace(/^\/+|\/+$/g, "");
+                if (p && !p.includes("/")) listId = decodeURIComponent(p);
+              }
+            } catch {
+              // ignore parse errors
+            }
+          }
+
           res.header("Cache-Control", "no-store");
           res.header("Content-Type", "application/manifest+json");
           res.send(JSON.stringify(manifestService.manifest(listId)));
