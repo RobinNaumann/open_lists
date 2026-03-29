@@ -2,9 +2,22 @@ import { Button, Card, Column, Icons, Page, Row, Text } from "elbe-ui";
 import { useApp } from "elbe-ui/dist/ui/app/app_ctxt";
 import { useEffect } from "react";
 import { createRandomListId } from "../app";
+import { appConfig } from "../shared/info.shared";
 import { useL10n } from "./l10n";
 
 const MANIFEST_PATH = "/api/manifest.webmanifest";
+
+function _setHeadMeta(name: string, content: string) {
+  let meta = document.head.querySelector<HTMLMetaElement>(
+    `meta[name="${name}"]`,
+  );
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.name = name;
+    document.head.appendChild(meta);
+  }
+  meta.content = content;
+}
 
 export function setManifestHref(listId: string | null) {
   let link = document.head.querySelector<HTMLLinkElement>(
@@ -16,6 +29,12 @@ export function setManifestHref(listId: string | null) {
     document.head.appendChild(link);
   }
   link.href = listId ? `${MANIFEST_PATH}?list_id=${listId}` : MANIFEST_PATH;
+
+  const appTitle = listId ? `${listId} - ${appConfig.name}` : appConfig.name;
+  _setHeadMeta("theme-color", appConfig.theme.accent);
+  _setHeadMeta("apple-mobile-web-app-capable", "yes");
+  _setHeadMeta("apple-mobile-web-app-status-bar-style", "default");
+  _setHeadMeta("apple-mobile-web-app-title", appTitle);
 }
 
 export function HomePage() {
