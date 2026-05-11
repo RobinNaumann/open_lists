@@ -17,11 +17,16 @@ export class ManifestService {
       description: "An open-source app for collaborative list-making.",
       id: startUrl,
       start_url: startUrl,
-      scope: "/",
+      scope: startUrl,
       display: "standalone",
       display_override: ["standalone", "minimal-ui", "browser"],
-      background_color: "#e0d5e9",
+      background_color: appConfig.theme.accent,
       theme_color: appConfig.theme.accent,
+      lang: "en-US",
+      orientation: "portrait",
+      categories: ["productivity"],
+      prefer_related_applications: false,
+      related_applications: [],
       icons: [
         {
           src: "/icon.png",
