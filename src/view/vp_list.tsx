@@ -6,7 +6,6 @@ import {
   Icon,
   IconButton,
   Icons,
-  LayerColor,
   Page,
   Row,
   share,
@@ -14,18 +13,13 @@ import {
   useToast,
 } from "elbe-ui";
 import { useApp } from "elbe-ui/dist/ui/app/app_ctxt";
-import { useEffect, useState } from "react";
-import {
-  createRandomListId,
-  makeServerCall,
-  useTheme,
-  WithTheme,
-} from "../app";
+import { useEffect, useMemo, useState } from "react";
+import { createRandomListId, makeServerCall } from "../app";
 import { appConfig } from "../shared/info.shared";
-import { ItemModel } from "../shared/m_list.shared";
+import { ItemModel, ListModel } from "../shared/m_list.shared";
 import { ListBit } from "./b_list";
 import { useL10n } from "./l10n";
-import { setManifestHref } from "./vp_home";
+import { setManifestHref, setThemeColor } from "./vp_home";
 
 export function ListPage(p: { listId: string }) {
   const app = useApp();
@@ -99,42 +93,45 @@ function _InvalidListId({}) {
 
 function _ListView(p: { listId: string }) {
   const listBit = ListBit.use();
-  const { themeConfig } = useTheme();
-  return listBit.mapUI(({ list, color }) => {
-    //const tc = JSON.parse(JSON.stringify(themeConfig));
-    themeConfig.color.values.root.accent = LayerColor.fromBack(color);
-    return (
-      <WithTheme themeConfig={themeConfig}>
-        <Column cross="center">
-          <Column
-            style={{
-              minWidth: "0",
-              maxWidth: "30rem",
-              width: "100%",
-            }}
-          >
-            {list.items.length === 0 && <_EmptyListHint listId={p.listId} />}
-            {list.items.map((item, i) => (
-              <_ListItem
-                key={item.content + item.setAt}
-                item={item}
-                onChange={(item) =>
-                  makeServerCall.setEntry({
-                    listId: p.listId,
-                    entryIndex: i,
-                    entry: item,
-                  })
-                }
-              />
-            ))}
-            {list.items.length < appConfig.constraints.maxListItems && (
-              <_NewEntry listId={p.listId} />
-            )}
-          </Column>
-        </Column>
-      </WithTheme>
-    );
-  });
+  return listBit.mapUI(({ list, color }) => (
+    <_ListBody listId={p.listId} list={list} color={color} />
+  ));
+}
+
+function _ListBody(p: { listId: string; list: ListModel; color: string }) {
+  useMemo(() => {
+    setThemeColor(p.color);
+  }, [p.color]);
+
+  return (
+    <Column cross="center">
+      <Column
+        style={{
+          minWidth: "0",
+          maxWidth: "30rem",
+          width: "100%",
+        }}
+      >
+        {p.list.items.length === 0 && <_EmptyListHint listId={p.listId} />}
+        {p.list.items.map((item, i) => (
+          <_ListItem
+            key={item.content + item.setAt}
+            item={item}
+            onChange={(item) =>
+              makeServerCall.setEntry({
+                listId: p.listId,
+                entryIndex: i,
+                entry: item,
+              })
+            }
+          />
+        ))}
+        {p.list.items.length < appConfig.constraints.maxListItems && (
+          <_NewEntry listId={p.listId} />
+        )}
+      </Column>
+    </Column>
+  );
 }
 
 function _ListItem(p: {

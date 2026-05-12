@@ -19,6 +19,10 @@ function _setHeadMeta(name: string, content: string) {
   meta.content = content;
 }
 
+export function setThemeColor(color: string) {
+  _setHeadMeta("theme-color", color);
+}
+
 export function setManifestHref(listId: string | null) {
   let link = document.head.querySelector<HTMLLinkElement>(
     'link[rel="manifest"]',
@@ -31,7 +35,7 @@ export function setManifestHref(listId: string | null) {
   link.href = listId ? `${MANIFEST_PATH}?list=${listId}` : MANIFEST_PATH;
 
   const appTitle = listId ? `${listId} - ${appConfig.name}` : appConfig.name;
-  _setHeadMeta("theme-color", appConfig.theme.accent);
+  setThemeColor(appConfig.theme.accent);
   _setHeadMeta("apple-mobile-web-app-capable", "yes");
   _setHeadMeta("apple-mobile-web-app-status-bar-style", "default");
   _setHeadMeta("apple-mobile-web-app-title", appTitle);
