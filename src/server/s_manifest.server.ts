@@ -6,8 +6,8 @@ export class ManifestService {
   public manifest(listId: string | null): object | null {
     // don't serve a manifest on the root path.
 
-    const normalizedListId = listId?.trim() || "";
-    if (normalizedListId === "") return null;
+    const normalizedListId = listId?.trim() || "demo";
+    //if (normalizedListId === "") return null;
 
     const appLongName = `${normalizedListId} - ${appConfig.name}`;
 
