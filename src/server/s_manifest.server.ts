@@ -73,7 +73,7 @@ export class ManifestService {
     contentType: string;
     data: Buffer<ArrayBufferLike>;
   }> {
-    const image = await sharp("public/pwaicon.png")
+    const image = await sharp("pwaicon.png")
       .flatten({ background: backgroundColor })
       .png()
       .toBuffer();
