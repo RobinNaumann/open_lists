@@ -1,15 +1,22 @@
+import sharp from "sharp";
 import { appConfig } from "../shared/info.shared";
+import { listService } from "./s_list.server";
 
 export class ManifestService {
-  public manifest(listId: string | null) {
-    const normalizedListId = listId?.trim() || null;
-    const appBaseLongName = appConfig.name + " — " + "Shared Lists";
-    const appLongName = normalizedListId
-      ? `${normalizedListId} - ${appConfig.name}`
-      : appBaseLongName;
+  public manifest(listId: string | null): object | null {
+    // don't serve a manifest on the root path.
+
+    const normalizedListId = listId?.trim() || "";
+    if (normalizedListId === "") return null;
+
+    const appLongName = `${normalizedListId} - ${appConfig.name}`;
+
     const startUrl = normalizedListId
       ? `/${encodeURIComponent(normalizedListId)}`
       : "/";
+
+    const color = listService.listAccentColor(listId);
+    const iconPath = `/api/pwa/icon.png?color=${color.substring(1)}`;
 
     return {
       name: appLongName,
@@ -20,8 +27,8 @@ export class ManifestService {
       scope: startUrl,
       display: "standalone",
       display_override: ["standalone", "minimal-ui", "browser"],
-      background_color: appConfig.theme.accent,
-      theme_color: appConfig.theme.accent,
+      background_color: color,
+      theme_color: color,
       lang: "en-US",
       orientation: "portrait",
       categories: ["productivity"],
@@ -29,19 +36,19 @@ export class ManifestService {
       related_applications: [],
       icons: [
         {
-          src: "/icon.png",
+          src: iconPath,
           sizes: "192x192",
           type: "image/png",
           purpose: "any maskable",
         },
         {
-          src: "/icon.png",
+          src: iconPath,
           sizes: "512x512",
           type: "image/png",
           purpose: "any maskable",
         },
         {
-          src: "/icon.png",
+          src: iconPath,
           sizes: "180x180",
           type: "image/png",
           purpose: "any",
@@ -55,6 +62,23 @@ export class ManifestService {
         },
       ],
     };
+  }
+
+  /**
+   * get the icon for the PWA
+   * @param backgroundColor expects the color as "#RRGGBB"
+   * @returns
+   */
+  public async getIcon(backgroundColor: string): Promise<{
+    contentType: string;
+    data: Buffer<ArrayBufferLike>;
+  }> {
+    const image = await sharp("public/pwaicon.png")
+      .flatten({ background: backgroundColor })
+      .png()
+      .toBuffer();
+
+    return { contentType: "image/png", data: image };
   }
 }
 

@@ -1,3 +1,4 @@
+import { appConfig } from "../shared/info.shared";
 import {
   isValidList,
   ItemModel,
@@ -8,9 +9,9 @@ import { NotifyableService } from "./s_notifyable.server";
 
 const storagePath = "./data/";
 
-function _sanitizeListId(id: string | null | undefined): string | null {
+function sanitizeId(id: string | null | undefined): string | null {
   if (!id) return null;
-  const trimmed = id.trim();
+  const trimmed = id.trim().toLowerCase();
   if (trimmed.length < 4) return null;
   if (trimmed.length > 64) return null;
   if (!/^[A-Za-z0-9_-]+(?:-[A-Za-z0-9_-]+)*$/.test(trimmed)) return null;
@@ -22,7 +23,7 @@ class ListService extends NotifyableService<ListModel> {
     unsanitizedListId: string,
     updater?: (existing: ListModel) => ListModel,
   ): Promise<ListModel> {
-    const listId = _sanitizeListId(unsanitizedListId);
+    const listId = sanitizeId(unsanitizedListId);
     if (!listId) throw new Error("invalid list id");
 
     const existing = await this.getList(listId);
@@ -34,7 +35,7 @@ class ListService extends NotifyableService<ListModel> {
   }
 
   async getList(unsanitizedListId: string): Promise<ListModel> {
-    const listId = _sanitizeListId(unsanitizedListId);
+    const listId = sanitizeId(unsanitizedListId);
     if (!listId) throw new Error("invalid list id");
 
     try {
@@ -86,6 +87,21 @@ class ListService extends NotifyableService<ListModel> {
       }
       return existing;
     });
+  }
+
+  listAccentColor(id: string | null): string {
+    const listId = sanitizeId(id);
+    if (!listId || listId === "") return appConfig.theme.accent;
+
+    let hash = 0;
+    for (let i = 0; i < listId.length; i++) {
+      hash = listId.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const color =
+      ((hash >> 24) & 0xff).toString(16).padStart(2, "0") +
+      ((hash >> 16) & 0xff).toString(16).padStart(2, "0") +
+      ((hash >> 8) & 0xff).toString(16).padStart(2, "0");
+    return `#${color}`;
   }
 }
 

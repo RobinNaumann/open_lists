@@ -6,6 +6,7 @@ import {
   Icon,
   IconButton,
   Icons,
+  LayerColor,
   Page,
   Row,
   share,
@@ -14,7 +15,12 @@ import {
 } from "elbe-ui";
 import { useApp } from "elbe-ui/dist/ui/app/app_ctxt";
 import { useEffect, useState } from "react";
-import { createRandomListId, makeServerCall } from "../app";
+import {
+  createRandomListId,
+  makeServerCall,
+  useTheme,
+  WithTheme,
+} from "../app";
 import { appConfig } from "../shared/info.shared";
 import { ItemModel } from "../shared/m_list.shared";
 import { ListBit } from "./b_list";
@@ -93,35 +99,42 @@ function _InvalidListId({}) {
 
 function _ListView(p: { listId: string }) {
   const listBit = ListBit.use();
-  return listBit.mapUI((list) => (
-    <Column cross="center">
-      <Column
-        style={{
-          minWidth: "0",
-          maxWidth: "30rem",
-          width: "100%",
-        }}
-      >
-        {list.items.length === 0 && <_EmptyListHint listId={p.listId} />}
-        {list.items.map((item, i) => (
-          <_ListItem
-            key={item.content + item.setAt}
-            item={item}
-            onChange={(item) =>
-              makeServerCall.setEntry({
-                listId: p.listId,
-                entryIndex: i,
-                entry: item,
-              })
-            }
-          />
-        ))}
-        {list.items.length < appConfig.constraints.maxListItems && (
-          <_NewEntry listId={p.listId} />
-        )}
-      </Column>
-    </Column>
-  ));
+  const { themeConfig } = useTheme();
+  return listBit.mapUI(({ list, color }) => {
+    //const tc = JSON.parse(JSON.stringify(themeConfig));
+    themeConfig.color.values.root.accent = LayerColor.fromBack(color);
+    return (
+      <WithTheme themeConfig={themeConfig}>
+        <Column cross="center">
+          <Column
+            style={{
+              minWidth: "0",
+              maxWidth: "30rem",
+              width: "100%",
+            }}
+          >
+            {list.items.length === 0 && <_EmptyListHint listId={p.listId} />}
+            {list.items.map((item, i) => (
+              <_ListItem
+                key={item.content + item.setAt}
+                item={item}
+                onChange={(item) =>
+                  makeServerCall.setEntry({
+                    listId: p.listId,
+                    entryIndex: i,
+                    entry: item,
+                  })
+                }
+              />
+            ))}
+            {list.items.length < appConfig.constraints.maxListItems && (
+              <_NewEntry listId={p.listId} />
+            )}
+          </Column>
+        </Column>
+      </WithTheme>
+    );
+  });
 }
 
 function _ListItem(p: {

@@ -5,7 +5,7 @@ import { createRandomListId } from "../app";
 import { appConfig } from "../shared/info.shared";
 import { useL10n } from "./l10n";
 
-const MANIFEST_PATH = "/api/manifest.webmanifest";
+const MANIFEST_PATH = "/api/pwa/manifest.webmanifest";
 
 function _setHeadMeta(name: string, content: string) {
   let meta = document.head.querySelector<HTMLMetaElement>(
@@ -28,7 +28,7 @@ export function setManifestHref(listId: string | null) {
     link.rel = "manifest";
     document.head.appendChild(link);
   }
-  link.href = listId ? `${MANIFEST_PATH}?list_id=${listId}` : MANIFEST_PATH;
+  link.href = listId ? `${MANIFEST_PATH}?list=${listId}` : MANIFEST_PATH;
 
   const appTitle = listId ? `${listId} - ${appConfig.name}` : appConfig.name;
   _setHeadMeta("theme-color", appConfig.theme.accent);

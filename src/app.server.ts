@@ -28,10 +28,11 @@ await channelServer.provideShared({
         keepOpen: true,
         sendLatestOnConnect: true,
         initialize: async (self) => {
-          const fn = (list: ListModel) => self.send({ list });
+          const color = listService.listAccentColor(p.id);
+          const fn = (list: ListModel) => self.send({ list, color });
           listService.listen(p.id, fn);
           self.config.onClose = () => listService.unlisten(p.id, fn);
-          return { list: await listService.getList(p.id) };
+          return { list: await listService.getList(p.id), color };
         },
       };
     },
@@ -62,15 +63,35 @@ const donauServer = donauServerRun(
     routes: [
       ...serverCallRoutes,
       ...channelServer.infoRoutes(),
-      route("/manifest.webmanifest", {
+      route("/pwa/icon.png", {
         method: "get",
         parameters: {
-          list_id: parameter.query({ optional: true, type: "string" }),
+          color: parameter.query({ optional: true, type: "string" }),
+        },
+        description:
+          "returns a PNG icon for the app, with the background color set to the value of the color query param " +
+          "(in HEX like RRGGBB without the #)",
+        handler: async (req, res) => {
+          const bgColor = `#${req.query.color}`.trim();
+          if (!/^#[0-9A-Fa-f]{6}$/.test(bgColor)) {
+            res.status(400).send("invalid color parameter");
+            return;
+          }
+          const result = await manifestService.getIcon(bgColor);
+          //res.header("Cache-Control", "no-store");
+          res.header("Content-Type", result.contentType);
+          res.send(result.data);
+        },
+      }),
+      route("/pwa/manifest.webmanifest", {
+        method: "get",
+        parameters: {
+          list: parameter.query({ optional: true, type: "string" }),
         },
         description:
           "returns a web manifest for the app, customized for the list if listId query param is provided",
         handler: async (req, res) => {
-          let receivedId: any = req.query.list_id;
+          let receivedId: any = req.query.list;
           if (Array.isArray(receivedId)) receivedId = receivedId[0];
           let listId = typeof receivedId === "string" ? receivedId : null;
 

@@ -22,12 +22,12 @@ import { HomePage } from "./view/vp_home";
 import { ListPage } from "./view/vp_list";
 
 export const { serverChannels } = useServerChannels({
-  port: import.meta.env.VITE_API_PORT,
+  port: (import.meta as any).env.VITE_API_PORT,
   shared: serverChannelDefinitions,
 });
 
 export const { makeServerCall } = useServerCalls(serverCallDefinitions, {
-  port: import.meta.env.VITE_API_PORT,
+  port: (import.meta as any).env.VITE_API_PORT,
 });
 
 const _themeContext = makeThemeContext({

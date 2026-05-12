@@ -9,5 +9,5 @@ export const serverCallDefinitions = {
 
 // prettier-ignore
 export const serverChannelDefinitions = {
-  list: sharedServerChannel<{}, { list: ListModel }>({sendLatestOnConnect: true}),
+  list: sharedServerChannel<{}, { list: ListModel, color: string }>({sendLatestOnConnect: true}),
 };
