@@ -47,7 +47,10 @@ export function ListPage(p: { listId: string }) {
         <IconButton
           ariaLabel={c.listCreate}
           icon={Icons.FilePlus}
-          onTap={() => app.router.go(`/${createRandomListId()}`)}
+          onTap={() => {
+            // open random new list in new tab
+            window.open(`/${createRandomListId()}`, "_blank");
+          }}
         />
       }
       actions={[
